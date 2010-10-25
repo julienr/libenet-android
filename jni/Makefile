@@ -1,0 +1,20 @@
+CC=g++
+CFLAGS=-c -Wall -DHAS_SOCKLEN_T -I.
+LDFLAGS=
+SOURCES=callbacks.c compress.c list.c host.c packet.c protocol.c peer.c unix.c
+OBJECTS=$(SOURCES:.c=.o)
+LIBRARY=../bin/linux/libenet.a
+
+
+all: $(SOURCES) $(LIBRARY)
+	
+$(LIBRARY): $(OBJECTS) 
+	mkdir -p ../bin/linux
+	ar rcs $(LIBRARY) $(OBJECTS)
+
+.c.o:
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	rm -f $(LIBRARY) 
+	rm -f *.o
